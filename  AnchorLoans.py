@@ -1,5 +1,4 @@
-from flask import Flask, render_template, flash, request
-from flask_wtf.csrf import CSRFProtect
+from flask import Flask, render_template,  request
 from models.validation import Startwith, Exactly16, Digits,Group4, Consecutive
 from models.forms import CredCarForm
 
@@ -17,9 +16,8 @@ def cred_card():
     form = CredCarForm()
     if request.method == 'POST':
 
-        cardHolder =form.cardHolder.data
+
         cardNumber = form.cardNumber.data
-        validThru = form.validThru.data
         options =  dict(form.options.choices).get(form.options.data)
         st = Startwith()
         Ex = Exactly16()
@@ -52,12 +50,11 @@ def cred_card():
 
 
         form.result.data = str(resposta)
-        print(resposta)
+
 
 
 
     return render_template('credcard.html', form=form)
-
 
 if __name__ == '__main__':
     app.run(debug=True)
